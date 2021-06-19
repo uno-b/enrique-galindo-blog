@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { options } from '../components/RichTextOptions';
 import Seo from '../components/Seo';
 import Header from '../components/Header';
+import SocialShare from '../components/SocialShare';
 import Author from '../components/Author';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
@@ -74,6 +75,16 @@ const Post = ({ data }) => {
             alt={postData.image.title}
           />
         </ImageWrapper>
+
+        <SocialShare
+          data={{
+            postUrl: window.location.href,
+            title: postData.seo.title,
+            shortDescription: postData.seo.shortDescription,
+            siteTitle: websiteSeo.siteTitle,
+          }}
+        />
+
         <h1>{postData.title}</h1>
 
         <Paragraph>{authorData.name}</Paragraph>
