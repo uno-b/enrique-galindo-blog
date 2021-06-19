@@ -1,79 +1,59 @@
 import React from 'react';
-import { StaticImage } from 'gatsby-plugin-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: fit-content;
-  background-color: #263843;
-  padding: 50px 0;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  padding: 0;
-  color: #c3ccd3;
-`;
-
-const Content = styled.div`
-  width: 50%;
-  margin: auto;
+  width: 70%;
+  margin: 100px auto;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
-const ImgWrapper = styled.div`
-  margin-bottom: 30px;
+const ProfileWrapper = styled.div`
+  max-width: 150px;
+  max-height: 150px;
+  margin: 0 25px;
+
   * {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     border-radius: 50%;
   }
 `;
 
-const Info = styled.div``;
+const Info = styled.div`
+  line-height: 1.5;
+  h1 {
+    font-size: 40px;
+    margin: 0;
+    padding: 0;
+  }
 
-const Paragraph = styled.p`
-  margin: 20px auto;
-  padding: 0;
-  color: #768791;
+  h3 {
+    color: #c3ccd3;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
-const Underline = styled.div`
-  width: 100px;
-  border-bottom: 2px solid #768791;
-  margin: -10px auto 50px;
-`;
+const Author = ({ data }) => {
+  const {
+    name,
+    status,
+    profilePicture: { gatsbyImageData, title },
+    paragraph1: { paragraph1 },
+    paragraph2: { paragraph2 },
+  } = data;
 
-const Author = () => {
   return (
     <Wrapper>
-      <Title>About The Author</Title>
-      <Underline />
-      <Content>
-        <ImgWrapper>
-          <StaticImage
-            src='../images/random_pro_pic.png'
-            width={200}
-            height={200}
-          />
-        </ImgWrapper>
-        <Info>
-          <Paragraph>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
-            laudantium sint consequatur praesentium consequuntur architecto
-            dolor aspernatur sed assumenda porro? Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Debitis ratione, ullam quas doloremque
-            laboriosam amet cupiditate odit nemo magnam voluptatem!
-          </Paragraph>
-          <Paragraph>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-            veniam, voluptatibus dolorum vel dicta praesentium. Deserunt
-            repudiandae quaerat fugiat quam dolores amet blanditiis explicabo
-            commodi quae dicta ea, eum voluptas.
-          </Paragraph>
-        </Info>
-      </Content>
+      <ProfileWrapper>
+        <GatsbyImage image={gatsbyImageData} alt={title} />
+      </ProfileWrapper>
+      <Info>
+        <h1>{name}</h1>
+        <h3>{status}</h3>
+        <p>{paragraph1}</p>
+        <p>{paragraph2}</p>
+      </Info>
     </Wrapper>
   );
 };

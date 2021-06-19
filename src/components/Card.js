@@ -1,6 +1,7 @@
 import React from 'react';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
+import { navigate } from 'gatsby';
 
 const Wrapper = styled.div`
   width: fit-content;
@@ -32,7 +33,14 @@ const Title = styled.p`
   font-weight: 700;
   color: #263843;
   text-align: center;
-  margin: 25px 0px 0px;
+  width: fit-content;
+  margin: 25px auto 0px;
+  cursor: pointer;
+  transition-duration: 0.2s;
+
+  &:hover {
+    color: #263843c7;
+  }
 `;
 
 const Info = styled.p`
@@ -50,11 +58,12 @@ const ShortDesc = styled.p`
   line-height: 30px;
 `;
 
-const ReadMore = styled.a`
+const ReadMore = styled.span`
   text-decoration: none;
   font-weight: bold;
   color: #f5381a;
   transition-duration: 0.2s;
+  cursor: pointer;
 
   &:hover {
     color: #f5371aba;
@@ -70,11 +79,15 @@ const Card = ({ large, data }) => {
         <ImgWrapper large={large}>
           <GatsbyImage image={image.gatsbyImageData} alt={image.title} />
         </ImgWrapper>
-        <Title large={large}>{title}</Title>
+        <Title large={large} onClick={() => navigate(`/posts/${slug}`)}>
+          {title}
+        </Title>
         <Info>{createdAt}</Info>
         <ShortDesc>
           {shortDescription}
-          <ReadMore href={`/posts/${slug}`}>{` `}Read More</ReadMore>
+          <ReadMore onClick={() => navigate(`/posts/${slug}`)}>
+            {` `}Read More
+          </ReadMore>
         </ShortDesc>
       </Content>
     </Wrapper>

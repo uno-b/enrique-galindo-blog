@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { BLOCKS, MARKS } from '@contentful/rich-text-types';
 import styled from 'styled-components';
 
 const Bold = styled.span`
   font-weight: bold;
-  font-size: 26px;
 `;
 
 const Text = styled.p`
@@ -30,15 +29,10 @@ export const options = {
   },
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
-    [BLOCKS.EMBEDDED_ASSET]: (node) => {
-      return (
-        <>
-          <h2>Embedded Asset</h2>
-          <pre>
-            <code>{JSON.stringify(node, null, 2)}</code>
-          </pre>
-        </>
-      );
+    [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
+      const { gatsbyImageData, title } = node.data.target;
+
+      return <GatsbyImage image={gatsbyImageData} alt={title} />;
     },
     hyperlink: (node, children) => {
       const { data } = node;

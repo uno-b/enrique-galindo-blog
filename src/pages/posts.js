@@ -5,26 +5,11 @@ import { Link } from 'gatsby';
 import { graphql } from 'gatsby';
 import Fade from 'react-reveal/Fade';
 
+import Seo from '../components/Seo';
+import Header from '../components/Header';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
-import Seo from '../components/Seo';
-
-const Header = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  height: fit-content;
-  padding: 50px;
-  background-color: #263843;
-  h1 {
-    padding: 0;
-    margin: 0;
-
-    * {
-      text-decoration: none;
-      color: white;
-    }
-  }
-`;
+import BackToTop from '../components/BackToTop';
 
 const Title = styled.h1`
   margin-top: 50px;
@@ -76,11 +61,7 @@ const Posts = ({ data }) => {
         image={socialImage}
         siteUrl={siteUrl}
       />
-      <Header>
-        <h1>
-          <Link to='/'>Enrique Galindo</Link>
-        </h1>
-      </Header>
+      <Header name={name} />
       <Fade left distance='60px'>
         <Title>The Library</Title>
       </Fade>
@@ -120,8 +101,8 @@ const Posts = ({ data }) => {
           {sortNew
             ? blogPostsData.map((edge, i) => {
                 return (
-                  <Fade bottom delay={i % 2 === 0 ? 0 : 200}>
-                    <Card large={true} data={edge.node} key={i} />
+                  <Fade bottom delay={i % 2 === 0 ? 0 : 200} key={i}>
+                    <Card large={true} data={edge.node} />
                   </Fade>
                 );
               })
@@ -130,14 +111,16 @@ const Posts = ({ data }) => {
                 .reverse()
                 .map((edge, i) => {
                   return (
-                    <Fade bottom delay={i % 2 === 0 ? 0 : 200}>
-                      <Card large={true} data={edge.node} key={i} />
+                    <Fade bottom delay={i % 2 === 0 ? 0 : 200} key={i}>
+                      <Card large={true} data={edge.node} />
                     </Fade>
                   );
                 })}
         </Content>
       </Wrapper>
       <Footer data={footerData} />
+
+      <BackToTop />
     </main>
   );
 };

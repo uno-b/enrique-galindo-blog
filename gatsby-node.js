@@ -5,9 +5,6 @@ exports.createPages = async function ({ actions, graphql }) {
         edges {
           node {
             slug
-            postContent {
-              raw
-            }
           }
         }
       }

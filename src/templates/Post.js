@@ -5,48 +5,87 @@ import { GatsbyImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
 
 import { options } from '../components/RichTextOptions';
+import Seo from '../components/Seo';
+import Header from '../components/Header';
+import Author from '../components/Author';
+import Footer from '../components/Footer';
+import BackToTop from '../components/BackToTop';
 
-const Header = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  height: fit-content;
-  padding: 50px;
-  background-color: #263843;
+import '../normalize.css';
+import '../global.css';
+
+const Wrapper = styled.div`
+  width: 70%;
+  margin: 50px auto;
+
   h1 {
-    padding: 0;
-    margin: 0;
-
-    * {
-      text-decoration: none;
-      color: white;
-    }
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
   }
 `;
 
-const Wrapper = styled.div`
-  width: 80%;
-  margin: 50px auto;
+const ImageWrapper = styled.div`
+  margin: auto;
+  text-align: center;
+
+  * {
+    border-radius: 16px;
+  }
+`;
+
+const Paragraph = styled.p`
+  text-align: center;
+  color: #c3ccd3;
+`;
+
+const RichText = styled.div`
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  padding: 64px;
+  margin-top: 32px;
 `;
 
 const Post = ({ data }) => {
+  const postData = data.contentfulBlogPost;
+  const authorData = data.allContentfulAboutTheAuthor.edges[0].node;
+  const footerData = data.allContentfulFooter.edges[0].node;
+
+  const websiteSeo = data.allContentfulWebsiteSeo.edges[0].node;
+
   return (
     <>
-      <Header>
-        <h1>
-          <Link to='/'>Enrique Galindo</Link>
-        </h1>
-      </Header>
-
-      <GatsbyImage
-        image={data.contentfulBlogPost.image.gatsbyImageData}
-        alt={data.contentfulBlogPost.image.title}
+      <Seo
+        title={postData.seo.title}
+        siteTitle={websiteSeo.siteTitle}
+        description={postData.seo.shortDescription}
+        author={authorData.name}
+        keywords={websiteSeo.keywords}
+        image={postData.seo.image}
+        siteUrl={websiteSeo.siteUrl}
       />
-      <h1>{data.contentfulBlogPost.title}</h1>
-      <p>{data.allContentfulAboutTheAuthor.edges[0].node.name}</p>
-      <p>{data.contentfulBlogPost.createdAt}</p>
+
+      <Header name={authorData.name} />
+
       <Wrapper>
-        {renderRichText(data.contentfulBlogPost.postContent, options)}
+        <ImageWrapper>
+          <GatsbyImage
+            image={postData.image.gatsbyImageData}
+            alt={postData.image.title}
+          />
+        </ImageWrapper>
+        <h1>{postData.title}</h1>
+
+        <Paragraph>{authorData.name}</Paragraph>
+        <Paragraph>{postData.createdAt}</Paragraph>
+        <RichText>{renderRichText(postData.postContent, options)}</RichText>
       </Wrapper>
+
+      <Author data={authorData} />
+
+      <Footer data={footerData} />
+
+      <BackToTop />
     </>
   );
 };
@@ -62,12 +101,69 @@ export const query = graphql`
       }
       postContent {
         raw
+        references {
+          ... on ContentfulAsset {
+            contentful_id
+            __typename
+            gatsbyImageData
+            title
+          }
+        }
+      }
+      seo {
+        title
+        shortDescription
+        image {
+          file {
+            url
+          }
+          fixed {
+            width
+            height
+          }
+        }
       }
     }
     allContentfulAboutTheAuthor {
       edges {
         node {
           name
+          status
+          profilePicture {
+            gatsbyImageData
+            title
+          }
+          paragraph1 {
+            paragraph1
+          }
+          paragraph2 {
+            paragraph2
+          }
+        }
+      }
+    }
+    allContentfulFooter {
+      edges {
+        node {
+          facebookLink
+          twitterLink
+          instagramLink
+          copyrightText
+        }
+      }
+    }
+    allContentfulWebsiteSeo {
+      edges {
+        node {
+          name
+          websiteDescription
+          siteTitle
+          siteUrl
+          socialImage {
+            gatsbyImageData
+            title
+          }
+          keywords
         }
       }
     }
