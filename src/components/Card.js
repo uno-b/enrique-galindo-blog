@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   background-color: white;
   padding: 15px;
   margin: auto;
+  cursor: pointer;
+
+  &:hover ${(props) => '#' + props.slug} {
+    color: #263843c7;
+  }
 `;
 
 const Content = styled.div`
@@ -37,10 +42,6 @@ const Title = styled.p`
   margin: 25px auto 0px;
   cursor: pointer;
   transition-duration: 0.2s;
-
-  &:hover {
-    color: #263843c7;
-  }
 `;
 
 const Info = styled.p`
@@ -74,12 +75,16 @@ const Card = ({ large, data }) => {
   const { createdAt, slug, title, shortDescription, image } = data;
 
   return (
-    <Wrapper large={large}>
+    <Wrapper
+      large={large}
+      slug={slug}
+      onClick={() => navigate(`/posts/${slug}`)}
+    >
       <Content large={large}>
         <ImgWrapper large={large}>
           <GatsbyImage image={image.gatsbyImageData} alt={image.title} />
         </ImgWrapper>
-        <Title large={large} onClick={() => navigate(`/posts/${slug}`)}>
+        <Title large={large} id={slug}>
           {title}
         </Title>
         <Info>{createdAt}</Info>
