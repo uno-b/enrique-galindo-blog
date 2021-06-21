@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
 import { graphql } from 'gatsby';
 import Fade from 'react-reveal/Fade';
+import fuzzysort from 'fuzzysort';
 
 import Seo from '../components/Seo';
 import Header from '../components/Header';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
+import { FaSearch } from 'react-icons/fa';
 
 const Title = styled.h1`
   margin-top: 50px;
@@ -28,15 +29,60 @@ const Wrapper = styled.div`
   margin: 50px auto;
 `;
 
+const Options = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: auto;
+
+  label {
+    margin-right: 20px;
+  }
+`;
+
+const Input = styled.div`
+  display: flex;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-radius: 8px;
+  margin-bottom: 50px;
+
+  input {
+    border: none;
+    outline: none;
+  }
+
+  button {
+    background-color: #f5381a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+`;
+
 const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 50px;
 `;
 
+const Error = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  height: calc(100vh - 400px);
+`;
+
 const Posts = ({ data }) => {
   const [sortNew, setSortNew] = useState(true);
+  const [sortedPosts, setSortedPosts] = useState([]);
   const [updatedPosts, setUpdatedPosts] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
 
   const blogPostsData = data.allContentfulBlogPost.edges;
   const footerData = data.allContentfulFooter.edges[0].node;
@@ -49,6 +95,54 @@ const Posts = ({ data }) => {
     keywords,
     socialImage,
   } = websiteSeoData;
+
+  useEffect(() => {
+    let newArray;
+
+    if (sortNew === true) {
+      newArray = blogPostsData;
+    } else {
+      newArray = blogPostsData.slice(0).reverse();
+    }
+
+    setSortedPosts(newArray);
+
+    updatedPosts && setUpdatedPosts(updatedPosts.slice(0).reverse());
+  }, [sortNew]);
+
+  const handleSearch = () => {
+    let newArray;
+
+    if (searchValue === '') {
+      newArray = sortedPosts;
+    } else if (updatedPosts) {
+      newArray = sortedPosts.filter((edge) => {
+        const result = fuzzysort.single(searchValue, edge.node.title);
+        if (result) {
+          return true;
+        }
+
+        return false;
+      });
+    } else {
+      newArray = sortedPosts.filter((edge) => {
+        const result = fuzzysort.single(searchValue, edge.node.title);
+        if (result) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+
+    setUpdatedPosts(newArray);
+  };
+
+  const handleSearchEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <main>
@@ -70,17 +164,15 @@ const Posts = ({ data }) => {
       </Fade>
 
       <Wrapper>
-        <div>
+        <Options>
           <div>
-            Sort By:
+            Sort By:{` `}
             <input
               type='radio'
               name='sort'
               id='new'
               checked={sortNew === true}
-              onChange={() => {
-                setSortNew(true);
-              }}
+              onChange={() => setSortNew(true)}
             />
             <label htmlFor='new'>New</label>
             <input
@@ -88,35 +180,43 @@ const Posts = ({ data }) => {
               name='sort'
               id='old'
               checked={sortNew === false}
-              onChange={() => {
-                setSortNew(false);
-              }}
+              onChange={() => setSortNew(false)}
             />
             <label htmlFor='old'>Old</label>
           </div>
-          <input />
-        </div>
+          <Input>
+            <input
+              value={searchValue}
+              placeholder='Search'
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={handleSearchEnter}
+            />
+            <button onClick={handleSearch}>
+              <FaSearch />
+            </button>
+          </Input>
+        </Options>
 
         <Content>
-          {sortNew
-            ? blogPostsData.map((edge, i) => {
+          {updatedPosts
+            ? updatedPosts.map((edge, i) => {
                 return (
                   <Fade bottom delay={i % 2 === 0 ? 0 : 200} key={i}>
                     <Card large={true} data={edge.node} />
                   </Fade>
                 );
               })
-            : blogPostsData
-                .slice(0)
-                .reverse()
-                .map((edge, i) => {
-                  return (
-                    <Fade bottom delay={i % 2 === 0 ? 0 : 200} key={i}>
-                      <Card large={true} data={edge.node} />
-                    </Fade>
-                  );
-                })}
+            : sortedPosts.map((edge, i) => {
+                return (
+                  <Fade bottom delay={i % 2 === 0 ? 0 : 200} key={i}>
+                    <Card large={true} data={edge.node} />
+                  </Fade>
+                );
+              })}
         </Content>
+        {updatedPosts && updatedPosts.length === 0 && (
+          <Error>No matching post found.</Error>
+        )}
       </Wrapper>
       <Footer data={footerData} />
 
