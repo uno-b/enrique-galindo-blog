@@ -15,18 +15,18 @@ const SocialLinks = styled.ul`
   padding: 0;
   margin-bottom: 20px;
 
-  a {
+  li {
     margin: 0 20px;
 
     &:hover {
-      li {
+      a {
         * {
           color: white;
         }
       }
     }
 
-    li {
+    a {
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -62,21 +62,36 @@ const Footer = ({ data }) => {
   return (
     <Container>
       <SocialLinks>
-        <a href={facebookLink} target='_blank' rel='noreferrer'>
-          <li>
+        <li>
+          <a
+            href={facebookLink}
+            target='_blank'
+            rel='noreferrer'
+            aria-label='Facebook'
+          >
             <FaFacebookF />
-          </li>
-        </a>
-        <a href={twitterLink} target='_blank' rel='noreferrer'>
-          <li>
+          </a>
+        </li>
+        <li>
+          <a
+            href={twitterLink}
+            target='_blank'
+            rel='noreferrer'
+            aria-label='Twitter'
+          >
             <FaTwitter />
-          </li>
-        </a>
-        <a href={instagramLink} target='_blank' rel='noreferrer'>
-          <li>
+          </a>
+        </li>
+        <li>
+          <a
+            href={instagramLink}
+            target='_blank'
+            rel='noreferrer'
+            aria-label='Instagram'
+          >
             <FaInstagram />
-          </li>
-        </a>
+          </a>
+        </li>
       </SocialLinks>
       <Underline />
       <Copyright>{copyrightText}</Copyright>
