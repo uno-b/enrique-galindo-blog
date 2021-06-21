@@ -78,7 +78,7 @@ const Post = ({ data }) => {
 
         <SocialShare
           data={{
-            postUrl: window.location.href,
+            postUrl: typeof window !== 'undefined' ? window.location.href : '',
             title: postData.seo.title,
             shortDescription: postData.seo.shortDescription,
             siteTitle: websiteSeo.siteTitle,
