@@ -25,10 +25,12 @@ const Underline = styled.div`
 const LatestPosts = styled.ul`
   list-style-type: none;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
-  grid-auto-columns: 1fr;
+  display: flex;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -43,7 +45,6 @@ const ButtonWrapper = styled.div`
     border-radius: 64px;
     cursor: pointer;
     transition: ease-out 0.3s;
-    margin-top: 20px;
 
     font-size: 19px;
     font-weight: 600;
@@ -68,7 +69,7 @@ const Posts = ({ data }) => {
       <Fade right distance='60px'>
         <Underline />
       </Fade>
-      <Fade bottom delay={200}>
+      <Fade bottom delay={200} distance='60px'>
         <Card large={true} data={data[0].node} />
       </Fade>
       <Fade left distance='60px'>
@@ -81,7 +82,7 @@ const Posts = ({ data }) => {
         {data.slice(1).map((edge, i) => {
           return (
             <li key={i}>
-              <Fade bottom delay={i * 200}>
+              <Fade bottom delay={i * 200} distance='60px'>
                 <Card data={edge.node} />
               </Fade>
             </li>

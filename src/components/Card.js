@@ -5,31 +5,59 @@ import { navigate } from 'gatsby';
 
 const Wrapper = styled.div`
   width: fit-content;
-  height: ${(props) => (props.large ? '600px' : '500px')};
+  height: ${(props) => (props.large ? '650px' : '550px')};
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   background-color: white;
   padding: 15px;
-  margin: auto;
+  margin: 0 auto 50px;
   cursor: pointer;
 
   &:hover ${(props) => '#' + props.slug} {
     color: #263843c7;
   }
+
+  @media only screen and (max-width: 600px) {
+    width: 80vw;
+    height: fit-content;
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 1000px) {
+    width: 50vw;
+  }
 `;
 
 const Content = styled.div`
-  width: ${(props) => (props.large ? '600px' : '25vw')};
+  width: ${(props) => (props.large ? '540px' : '25vw')};
   margin-bottom: 25px;
+
+  @media only screen and (max-width: 600px) {
+    width: 80vw;
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 1000px) {
+    width: 50vw;
+  }
 `;
 
 const ImgWrapper = styled.div`
   margin-bottom: 35px;
-  width: ${(props) => (props.large ? '600px' : '25vw')};
 
   * {
     object-fit: cover;
 
     height: ${(props) => (props.large ? '340px' : '200px')};
+  }
+
+  @media only screen and (max-width: 600px) {
+    * {
+      width: 80vw;
+    }
+  }
+
+  @media screen and (min-width: 600px) and (max-width: 1000px) {
+    * {
+      width: 50vw;
+    }
   }
 `;
 

@@ -9,7 +9,6 @@ import Seo from '../components/Seo';
 import Header from '../components/Header';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
-import BackToTop from '../components/BackToTop';
 import { FaSearch } from 'react-icons/fa';
 
 const Title = styled.h1`
@@ -38,6 +37,12 @@ const Options = styled.div`
   label {
     margin-right: 20px;
   }
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Input = styled.div`
@@ -47,6 +52,7 @@ const Input = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   border-radius: 8px;
   margin-bottom: 50px;
+  width: fit-content;
 
   input {
     border: none;
@@ -60,12 +66,21 @@ const Input = styled.div`
     border-radius: 8px;
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 600px) {
+    margin: 25px auto;
+  }
 `;
 
 const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 50px;
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: 10px;
+  }
 `;
 
 const Error = styled.h1`
@@ -201,14 +216,24 @@ const Posts = ({ data }) => {
           {updatedPosts
             ? updatedPosts.map((edge, i) => {
                 return (
-                  <Fade bottom delay={i % 2 === 0 ? 0 : 200} key={i}>
+                  <Fade
+                    bottom
+                    delay={i % 2 === 0 ? 0 : 200}
+                    distance='60px'
+                    key={i}
+                  >
                     <Card large={true} data={edge.node} />
                   </Fade>
                 );
               })
             : sortedPosts.map((edge, i) => {
                 return (
-                  <Fade bottom delay={i % 2 === 0 ? 0 : 200} key={i}>
+                  <Fade
+                    bottom
+                    delay={i % 2 === 0 ? 0 : 200}
+                    distance='120px'
+                    key={i}
+                  >
                     <Card large={true} data={edge.node} />
                   </Fade>
                 );
@@ -219,8 +244,6 @@ const Posts = ({ data }) => {
         )}
       </Wrapper>
       <Footer data={footerData} />
-
-      <BackToTop />
     </main>
   );
 };

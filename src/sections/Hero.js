@@ -39,16 +39,36 @@ const Wrapper = styled.div`
   * {
     margin: 25px;
   }
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 900px) {
+    width: 500px;
+  }
 `;
 
 const Title = styled.p`
   font-size: 42px;
   font-weight: 600;
   line-height: 1.5;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 25px;
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 900px) {
+    font-size: 35px;
+  }
 `;
 
 const Subtitle = styled.p`
   font-size: 20px;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 15px;
+  }
 `;
 
 const Button = styled.button`
@@ -68,6 +88,16 @@ const Button = styled.button`
   &:hover {
     color: #ffffffc3;
     border-color: #ffffffc3;
+  }
+
+  @media only screen and (max-width: 600px) {
+    font-size: 10px;
+    width: 150px;
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 900px) {
+    font-size: 15px;
+    width: 200px;
   }
 `;
 
