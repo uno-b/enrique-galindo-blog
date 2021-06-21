@@ -123,6 +123,7 @@ const Posts = ({ data }) => {
     setSortedPosts(newArray);
 
     updatedPosts && setUpdatedPosts(updatedPosts.slice(0).reverse());
+    // eslint-disable-next-line
   }, [sortNew]);
 
   const handleSearch = () => {

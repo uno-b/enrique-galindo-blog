@@ -6,6 +6,9 @@ const Wrapper = styled.div`
   width: 70%;
   margin: 100px auto;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ProfileWrapper = styled.div`
@@ -25,12 +28,33 @@ const Info = styled.div`
     font-size: 40px;
     margin: 0;
     padding: 0;
+    text-align: center;
   }
 
   h3 {
     color: #c3ccd3;
     margin: 0;
     padding: 0;
+    text-align: center;
+  }
+`;
+
+const Paragraph = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  p {
+    width: 40%;
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 800px) {
+    flex-direction: column;
+
+    p {
+      width: 80%;
+    }
   }
 `;
 
@@ -51,8 +75,10 @@ const Author = ({ data }) => {
       <Info>
         <h1>{name}</h1>
         <h3>{status}</h3>
-        <p>{paragraph1}</p>
-        <p>{paragraph2}</p>
+        <Paragraph>
+          <p>{paragraph1}</p>
+          <p>{paragraph2}</p>
+        </Paragraph>
       </Info>
     </Wrapper>
   );

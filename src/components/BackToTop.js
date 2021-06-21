@@ -5,8 +5,8 @@ import { FaArrowAltCircleUp } from 'react-icons/fa';
 
 const Button = styled.button`
   position: fixed;
-  bottom: 50px;
-  right: 100px;
+  bottom: 5vh;
+  right: 10vw;
   background-color: transparent;
   border: none;
   border-radius: 50%;

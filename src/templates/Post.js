@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql } from 'gatsby';
 import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
@@ -23,6 +23,10 @@ const Wrapper = styled.div`
     text-align: center;
     font-size: 40px;
     font-weight: bold;
+  }
+
+  @media only screen and (max-width: 800px) {
+    width: 90%;
   }
 `;
 
