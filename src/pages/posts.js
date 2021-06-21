@@ -251,9 +251,7 @@ const Posts = ({ data }) => {
 
 export const query = graphql`
   query PostQuery {
-    allContentfulBlogPost(
-      sort: { fields: postContent___references___createdAt }
-    ) {
+    allContentfulBlogPost(sort: { fields: createdAt }) {
       edges {
         node {
           createdAt(fromNow: true)

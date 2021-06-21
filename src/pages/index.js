@@ -87,10 +87,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulBlogPost(
-      limit: 4
-      sort: { fields: postContent___references___createdAt }
-    ) {
+    allContentfulBlogPost(limit: 4, sort: { fields: createdAt }) {
       edges {
         node {
           createdAt(fromNow: true)
