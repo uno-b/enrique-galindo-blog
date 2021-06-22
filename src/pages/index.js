@@ -83,6 +83,7 @@ export const query = graphql`
           facebookLink
           twitterLink
           instagramLink
+          linkedInLink
           copyrightText
         }
       }
@@ -90,7 +91,7 @@ export const query = graphql`
     allContentfulBlogPost(limit: 4, sort: { fields: createdAt }) {
       edges {
         node {
-          createdAt(fromNow: true)
+          createdAt(formatString: "MMMM DD, YYYY")
           slug
           title
           shortDescription

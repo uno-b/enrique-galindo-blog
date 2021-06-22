@@ -1,5 +1,10 @@
 import React from 'react';
-import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+} from 'react-icons/fa';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -57,7 +62,13 @@ const Copyright = styled.p`
 `;
 
 const Footer = ({ data }) => {
-  const { facebookLink, twitterLink, instagramLink, copyrightText } = data;
+  const {
+    facebookLink,
+    twitterLink,
+    instagramLink,
+    linkedInLink,
+    copyrightText,
+  } = data;
 
   return (
     <Container>
@@ -90,6 +101,16 @@ const Footer = ({ data }) => {
             aria-label='Instagram'
           >
             <FaInstagram />
+          </a>
+        </li>
+        <li>
+          <a
+            href={linkedInLink}
+            target='_blank'
+            rel='noreferrer'
+            aria-label='Linked In'
+          >
+            <FaLinkedinIn />
           </a>
         </li>
       </SocialLinks>

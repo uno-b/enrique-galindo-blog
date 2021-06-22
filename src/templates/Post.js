@@ -109,7 +109,7 @@ export const query = graphql`
   query ($slug: String!) {
     contentfulBlogPost(slug: { eq: $slug }) {
       title
-      createdAt(fromNow: true)
+      createdAt(formatString: "MMMM DD, YYYY")
       image {
         gatsbyImageData
         title
