@@ -88,10 +88,10 @@ export const query = graphql`
         }
       }
     }
-    allContentfulBlogPost(limit: 4, sort: { fields: createdAt }) {
+    allContentfulBlogPost(limit: 4, sort: { fields: date }) {
       edges {
         node {
-          createdAt(formatString: "MMMM DD, YYYY")
+          date(formatString: "MMMM DD, YYYY")
           slug
           title
           shortDescription

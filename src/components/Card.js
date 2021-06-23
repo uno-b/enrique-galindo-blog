@@ -100,7 +100,7 @@ const ReadMore = styled.span`
 `;
 
 const Card = ({ large, data }) => {
-  const { createdAt, slug, title, shortDescription, image } = data;
+  const { date, slug, title, shortDescription, image } = data;
 
   return (
     <Wrapper
@@ -115,7 +115,7 @@ const Card = ({ large, data }) => {
         <Title large={large} id={slug}>
           {title}
         </Title>
-        <Info>{createdAt}</Info>
+        <Info>{date}</Info>
         <ShortDesc>
           {shortDescription}
           <ReadMore onClick={() => navigate(`/posts/${slug}`)}>

@@ -251,10 +251,10 @@ const Posts = ({ data }) => {
 
 export const query = graphql`
   query PostQuery {
-    allContentfulBlogPost(sort: { fields: createdAt }) {
+    allContentfulBlogPost(sort: { fields: date }) {
       edges {
         node {
-          createdAt(formatString: "MMMM DD, YYYY")
+          date(formatString: "MMMM DD, YYYY")
           slug
           title
           shortDescription

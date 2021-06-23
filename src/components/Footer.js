@@ -69,6 +69,7 @@ const Footer = ({ data }) => {
     linkedInLink,
     copyrightText,
   } = data;
+  console.log(linkedInLink);
 
   return (
     <Container>
