@@ -251,7 +251,7 @@ const Posts = ({ data }) => {
 
 export const query = graphql`
   query PostQuery {
-    allContentfulBlogPost(sort: { fields: date }) {
+    allContentfulBlogPost(sort: { fields: date, order: DESC }) {
       edges {
         node {
           date(formatString: "MMMM DD, YYYY")

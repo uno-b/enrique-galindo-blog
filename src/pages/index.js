@@ -88,7 +88,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulBlogPost(limit: 4, sort: { fields: date }) {
+    allContentfulBlogPost(limit: 4, sort: { fields: date, order: DESC }) {
       edges {
         node {
           date(formatString: "MMMM DD, YYYY")
